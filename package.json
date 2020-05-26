@@ -8,22 +8,22 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --forceExit --detectOpenHandles"
   },
   "devDependencies": {},
   "dependencies": {
     "jest": "^26.0.1",
     "knex": "<0.20.0",
     "sqlite3": "latest",
-    "strapi": "3.0.0-beta.20.3",
-    "strapi-admin": "3.0.0-beta.20.3",
-    "strapi-connector-bookshelf": "3.0.0-beta.20.3",
-    "strapi-plugin-content-manager": "3.0.0-beta.20.3",
-    "strapi-plugin-content-type-builder": "3.0.0-beta.20.3",
-    "strapi-plugin-email": "3.0.0-beta.20.3",
-    "strapi-plugin-upload": "3.0.0-beta.20.3",
-    "strapi-plugin-users-permissions": "3.0.0-beta.20.3",
-    "strapi-utils": "3.0.0-beta.20.3",
+    "strapi": "3.0.0",
+    "strapi-admin": "3.0.0",
+    "strapi-connector-bookshelf": "3.0.0",
+    "strapi-plugin-content-manager": "3.0.0",
+    "strapi-plugin-content-type-builder": "3.0.0",
+    "strapi-plugin-email": "3.0.0",
+    "strapi-plugin-upload": "3.0.0",
+    "strapi-plugin-users-permissions": "3.0.0",
+    "strapi-utils": "3.0.0",
     "supertest": "^4.0.2"
   },
   "author": {
@@ -42,6 +42,7 @@
       "/node_modules/",
       ".tmp",
       ".cache"
-    ]
+    ],
+    "testEnvironment": "node"
   }
 }
