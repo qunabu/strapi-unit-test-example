@@ -47,6 +47,7 @@
     "testEnvironment": "node"
   },
   "jest-junit": {
-    "output": "./test-results/junit.xml"
+    "outputDirectory": "./test-results",
+    "outputName": "junit.xml"
   }
 }
