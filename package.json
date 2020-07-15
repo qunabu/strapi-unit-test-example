@@ -8,11 +8,12 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --forceExit --detectOpenHandles"
+    "test": "mkdir -p test-results && jest --forceExit --detectOpenHandles"
   },
   "devDependencies": {},
   "dependencies": {
     "jest": "^26.0.1",
+    "jest-junit": "^11.0.1",
     "knex": "<0.20.0",
     "sqlite3": "latest",
     "strapi": "3.0.0",
@@ -44,5 +45,9 @@
       ".cache"
     ],
     "testEnvironment": "node"
+  },
+  "jest-junit": {
+    "outputDirectory": "./test-results",
+    "outputName": "junit.xml"
   }
 }
