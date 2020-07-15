@@ -13,6 +13,7 @@
   "devDependencies": {},
   "dependencies": {
     "jest": "^26.0.1",
+    "jest-junit": "^11.0.1",
     "knex": "<0.20.0",
     "sqlite3": "latest",
     "strapi": "3.0.0",

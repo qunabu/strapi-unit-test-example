@@ -17,4 +17,8 @@ jobs:
             - /home/circleci/.npm
       - run:
           name: Run Tests
-          command: npm test
+          command: yarn test  --ci --reporters=jest-junit
+      - store_artifacts:
+          path: ./
+      - store_test_results:
+          path: ./

@@ -111,3 +111,8 @@ coverage
 exports
 .cache
 build
+
+############################
+# junit test covarage
+############################
+junit.xml
