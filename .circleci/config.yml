@@ -19,6 +19,6 @@ jobs:
           name: Run Tests
           command: yarn test  --ci --reporters=jest-junit
       - store_artifacts:
-          path: ./
+          path: ./test-results
       - store_test_results:
-          path: ./
+          path: ./test-results

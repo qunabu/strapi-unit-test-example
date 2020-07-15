@@ -8,7 +8,7 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --forceExit --detectOpenHandles"
+    "test": "mkdir -p test-results && jest --forceExit --detectOpenHandles"
   },
   "devDependencies": {},
   "dependencies": {
@@ -45,5 +45,8 @@
       ".cache"
     ],
     "testEnvironment": "node"
+  },
+  "jest-junit": {
+    "output": "./test-results/junit.xml"
   }
 }
