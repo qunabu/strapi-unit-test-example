@@ -8,11 +8,7 @@
         "filename": ".tmp/test.db"
       },
       "options": {
-        "useNullAsDefault": true,
-        "pool": {
-          "min": 0,
-          "max": 15
-        }
+        "useNullAsDefault": true
       }
     }
   }
