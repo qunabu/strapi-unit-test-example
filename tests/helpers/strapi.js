@@ -2,6 +2,7 @@ const Strapi = require("strapi");
 const http = require("http");
 
 let instance;
+jest.setTimeout(30000);
 
 async function setupStrapi() {
   if (!instance) {
