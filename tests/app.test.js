@@ -1,6 +1,8 @@
 const fs = require("fs");
 const { setupStrapi } = require("./helpers/strapi");
 
+jest.setTimeout(30000);
+
 /** this code is called once before any test is called */
 beforeAll(async () => {
   await setupStrapi(); // singleton so it can be called many times
