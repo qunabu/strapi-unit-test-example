@@ -26,9 +26,12 @@ describe("Default User methods", () => {
       })
       .expect("Content-Type", /json/)
       .expect(200)
-      .then((data) => {
+      .then(async (data) => {
         expect(data.body.jwt).toBeDefined();
-        expect(data.body.jwt).not.toBe(jwt); // jwt does have a random seed, each issue should be different
+        const verified = await strapi.plugins[
+          "users-permissions"
+        ].services.jwt.verify(data.body.jwt);
+        expect(data.body.jwt == jwt || verified).not.toBe(true); // jwt does have a random seed, each issue can be different
       });
 
     done();
