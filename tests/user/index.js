@@ -31,7 +31,7 @@ describe("Default User methods", () => {
         const verified = await strapi.plugins[
           "users-permissions"
         ].services.jwt.verify(data.body.jwt);
-        expect(data.body.jwt == jwt || verified).not.toBe(true); // jwt does have a random seed, each issue can be different
+        expect(data.body.jwt == jwt || !!verified).toBe(true); // jwt does have a random seed, each issue can be different
       });
 
     done();
