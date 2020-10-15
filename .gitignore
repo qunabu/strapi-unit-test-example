@@ -117,3 +117,5 @@ build
 ############################
 junit.xml
 **/junit.xml
+
+testing.md

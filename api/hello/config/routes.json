@@ -1,7 +1,16 @@
 {
   "routes": [{
-    "method": "GET",
-    "path": "/hello",
-    "handler": "Hello.index"
-  }]
+      "method": "GET",
+      "path": "/hello",
+      "handler": "Hello.index"
+    },
+    {
+      "method": "GET",
+      "path": "/hi",
+      "handler": "Hello.hi",
+      "config": {
+        "policies": ["plugins::users-permissions.isAuthenticated"]
+      }
+    }
+  ]
 }
