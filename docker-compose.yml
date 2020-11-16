@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres
     expose:
-      - "5435"
+      - "5432"
     environment:
       POSTGRES_DB: strapi
       POSTGRES_USER: strapi
@@ -12,5 +12,4 @@ services:
     volumes:
       - ./data:/data/postgres
     ports:
-      - "5435:5435"
-    command: -p 5435
+      - "5432:5432"
