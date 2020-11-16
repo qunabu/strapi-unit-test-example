@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres
+    expose:
+      - "5435"
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi
+    volumes:
+      - ./data:/data/postgres
+    ports:
+      - "5435:5435"
+    command: -p 5435

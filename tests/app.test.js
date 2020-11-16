@@ -1,5 +1,9 @@
 const fs = require("fs");
 const { setupStrapi } = require("./helpers/strapi");
+const { connectAndClear } = require("./helpers/pg");
+const knexCleaner = require("knex-cleaner");
+
+const settings = require("./../config/env/test/database");
 
 jest.setTimeout(30000);
 
@@ -15,18 +19,11 @@ beforeAll(async (done) => {
 
 /** this code is called once before all the tested are finished */
 afterAll(async (done) => {
-  await strapi.server.close();
-  await sleep(1000); // clear database connection
+  await knexCleaner.clean(strapi.connections.default, { mode: "delete" }); // clear database after all tests
+  await strapi.server.close(); // close the server
 
-  const dbSettings = strapi.config.get("database.connections.default.settings");
+  await sleep(1000);
 
-  //delete test database after all tests
-  if (dbSettings && dbSettings.filename) {
-    const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
-    if (fs.existsSync(tmpDbFile)) {
-      fs.unlinkSync(tmpDbFile);
-    }
-  }
   done();
 });
 
