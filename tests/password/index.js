@@ -2,13 +2,13 @@ const request = require("supertest");
 const userFactory = require("./../user/factory");
 const nodemailerMock = require("nodemailer-mock");
 
-// const { jwt, grantPrivilage } = require("./../helpers/strapi");
+// const { jwt, grantPrivilege } = require("./../helpers/strapi");
 describe("Reset password", () => {
   let user;
 
   beforeAll(async (done) => {
     user = await userFactory.createUser(strapi);
-    // await grantPrivilage(1, "permissions.application.controllers.hello.hi");
+    // await grantPrivilege(1, "permissions.application.controllers.hello.hi");
     done();
   });
 
