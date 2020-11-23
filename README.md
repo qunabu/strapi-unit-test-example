@@ -1,6 +1,6 @@
 # Strapi application
 
-Example of `jest` unit tests with Strapi. 
+Example of `jest` integration/functional tests with Strapi. 
 
 See main [test file](tests/app.test.js) for details.
 
