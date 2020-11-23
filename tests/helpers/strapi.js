@@ -38,7 +38,7 @@ const jwt = async (idOrEmail) =>
  * @param {boolean} enabled, default true
  * @param {string} policy, default ''
  */
-const grantPrivilage = async (
+const grantPrivilege = async (
   roleID = 1,
   value,
   enabled = true,
@@ -54,11 +54,11 @@ const grantPrivilage = async (
 };
 
 /** Updates database `permissions` that role can access an endpoint
- * @see grantPrivilage
+ * @see grantPrivilege
  */
 
-const grantPrivilages = async (roleID = 1, values = []) => {
-  values.forEach((value) => grantPrivilage(roleID, value));
+const grantPrivileges = async (roleID = 1, values = []) => {
+  await Promise.all(values.map(val => grantPrivilege(roleID, val)));
 };
 
 /**
@@ -131,8 +131,8 @@ const responseHasError = (errorId, response) => {
 module.exports = {
   setupStrapi,
   jwt,
-  grantPrivilage,
-  grantPrivilages,
+  grantPrivilege,
+  grantPrivileges,
   updatePluginStore,
   getPluginStore,
   responseHasError,

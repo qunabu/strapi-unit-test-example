@@ -1,12 +1,12 @@
 const request = require("supertest");
 const userFactory = require("./../user/factory");
-const { jwt, grantPrivilage } = require("./../helpers/strapi");
+const { jwt, grantPrivilege } = require("./../helpers/strapi");
 describe("Hello methods", () => {
   let user;
 
   beforeAll(async (done) => {
     user = await userFactory.createUser(strapi);
-    await grantPrivilage(1, "permissions.application.controllers.hello.hi"); // 1 is default role for new confirmed users
+    await grantPrivilege(1, "permissions.application.controllers.hello.hi"); // 1 is default role for new confirmed users
     done();
   });
 
