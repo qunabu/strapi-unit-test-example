@@ -8,25 +8,26 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "mkdir -p test-results && jest --forceExit --detectOpenHandles"
+    "test": "mkdir -p test-results && NODE_ENV=test ./node_modules/.bin/jest --forceExit --runInBand --cache --detectOpenHandles",
+    "test:watch": "mkdir -p test-results && NODE_ENV=test ./node_modules/.bin/jest --watchAll --runInBand --cache --detectOpenHandles ./tests/integration/app.test.js"
   },
   "dependencies": {
-    "jest": "^26.4.2",
-    "jest-junit": "^11.1.0",
-    "knex": "^0.21.5",
-    "nodemailer-mock": "^1.5.3",
+    "jest": "^27.4.3",
+    "jest-junit": "^13.0.0",
+    "knex": "^0.95.14",
+    "nodemailer-mock": "^1.5.11",
     "sqlite3": "latest",
-    "strapi": "3.3.2",
-    "strapi-admin": "3.3.2",
-    "strapi-connector-bookshelf": "3.3.2",
-    "strapi-plugin-content-manager": "3.3.2",
-    "strapi-plugin-content-type-builder": "3.3.2",
-    "strapi-plugin-documentation": "3.3.2",
-    "strapi-plugin-email": "3.3.2",
-    "strapi-plugin-upload": "3.3.2",
-    "strapi-plugin-users-permissions": "3.3.2",
-    "strapi-utils": "3.3.2",
-    "supertest": "^4.0.2"
+    "strapi": "3.6.8",
+    "strapi-admin": "3.6.8",
+    "strapi-connector-bookshelf": "3.6.8",
+    "strapi-plugin-content-manager": "3.6.8",
+    "strapi-plugin-content-type-builder": "3.6.8",
+    "strapi-plugin-documentation": "3.6.8",
+    "strapi-plugin-email": "3.6.8",
+    "strapi-plugin-upload": "3.6.8",
+    "strapi-plugin-users-permissions": "3.6.8",
+    "strapi-utils": "3.6.8",
+    "supertest": "^6.1.6"
   },
   "author": {
     "name": "A Strapi developer"
