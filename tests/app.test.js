@@ -8,13 +8,12 @@ const sleep = (milliseconds) => {
 };
 
 /** this code is called once before any test is called */
-beforeAll(async (done) => {
+beforeAll(async () => {
   await setupStrapi(); // singleton so it can be called many times
-  done();
 });
 
 /** this code is called once before all the tested are finished */
-afterAll(async (done) => {
+afterAll(async () => {
   await strapi.server.close();
   await sleep(1000); // clear database connection
 
@@ -27,16 +26,15 @@ afterAll(async (done) => {
       fs.unlinkSync(tmpDbFile);
     }
   }
-  done();
 });
 
 describe("Strapi in general", () => {
-  it("strapi is defined", async (done) => {
+  it("strapi is defined", async () => {
     expect(strapi).toBeDefined();
-    done();
   });
 });
 
 require("./hello");
 require("./user");
 require("./password");
+require("./todo-list");

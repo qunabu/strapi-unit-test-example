@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "hellos",
+  "info": {
+    "name": "hello"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "message": {
+      "type": "string",
+      "default": "hello world"
+    }
+  }
+}

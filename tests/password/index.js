@@ -2,17 +2,14 @@ const request = require("supertest");
 const userFactory = require("./../user/factory");
 const nodemailerMock = require("nodemailer-mock");
 
-// const { jwt, grantPrivilege } = require("./../helpers/strapi");
 describe("Reset password", () => {
   let user;
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     user = await userFactory.createUser(strapi);
-    // await grantPrivilege(1, "permissions.application.controllers.hello.hi");
-    done();
   });
 
-  it("should reset password, send email with link, link should change password", async (done) => {
+  it("should reset password, send email with link, link should change password", async () => {
     const newPassword = "newPassword";
     // 1. send emil to forgot password
 
@@ -32,7 +29,7 @@ describe("Reset password", () => {
     expect(emailsSent.length).toBeGreaterThan(0);
 
     // one of the emails should contain the token for changing password
-    const confirmRegEx = /\A?code=[^&|\s|<|"]+&*/g;
+    const confirmRegEx = /\A?code=[^&|\s<"]+&*/g;
     const confirmationLink = emailsSent.reduce((acc, curr) => {
       return (
         (curr.text &&
@@ -87,7 +84,5 @@ describe("Reset password", () => {
         expect(response.body.user.username).toBe(user.username);
         expect(response.body.user.email).toBe(user.email);
       });
-
-    done();
   });
 });

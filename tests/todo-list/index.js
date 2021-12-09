@@ -6,15 +6,15 @@ describe("Hello methods", () => {
 
   beforeAll(async () => {
     user = await userFactory.createUser(strapi);
-    await grantPrivilege(1, "permissions.application.controllers.hello.hi"); // 1 is default role for new confirmed users
+    await grantPrivilege(1, "permissions.application.controllers[\'todo-list\'].find"); // 1 is default role for new confirmed users
   });
 
-  it("should return hello world", async () => {
+  it("should return a list of todos", async () => {
     await request(strapi.server) // app server is and instance of Class: http.Server
-      .get("/hello")
+      .get("/todo-lists")
       .expect(200) // Expect response http code 200
       .then((data) => {
-        expect(data.text).toBe("Hello World!"); // expect the response text
+        expect(data.text).toBe([]); // expect the response text
       });
   });
 

@@ -45,7 +45,7 @@ const grantPrivilege = async (
   policy = ""
 ) => {
   const updateObj = value
-    .split(".")
+    .match(/[a-zA-Z-]+[^.|^[\]']/gm)
     .reduceRight((obj, next) => ({ [next]: obj }), { enabled, policy });
 
   return await strapi.plugins[
@@ -112,8 +112,7 @@ const getPluginStore = (pluginName, key, environment = "") => {
  * responseHasError("Auth.form.error.confirmed", response) // true
  */
 const responseHasError = (errorId, response) => {
-  if (
-    response &&
+  return !!(response &&
     response.message &&
     Array.isArray(response.message) &&
     response.message.find(
@@ -121,11 +120,8 @@ const responseHasError = (errorId, response) => {
         entry.messages &&
         Array.isArray(entry.messages) &&
         entry.messages.find((msg) => msg.id && msg.id === errorId)
-    )
-  ) {
-    return true;
-  }
-  return false;
+    ));
+
 };
 
 module.exports = {
