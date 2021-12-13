@@ -6,10 +6,10 @@
  */
 
 module.exports = {
-  index: async (ctx) => {
+  async index(ctx) {
     ctx.send("Hello World!");
   },
-  hi: (ctx) => {
+  async hi(ctx) {
     ctx.send(`Hi ${ctx.state.user.username}`);
   },
 };

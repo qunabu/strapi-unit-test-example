@@ -1,3 +1,4 @@
+const { describe, beforeAll, afterAll, it, expect } = require('@jest/globals');
 const request = require("supertest");
 const { updatePluginStore, responseHasError } = require("./../helpers/strapi");
 const { createUser, defaultData, mockUserData } = require("./factory");
@@ -7,7 +8,7 @@ describe("Default User methods", () => {
   let user;
 
   beforeAll(async () => {
-    user = await createUser(strapi);
+    user = await createUser();
   });
 
   it("should login user and return jwt token", async () => {
@@ -80,8 +81,7 @@ describe("Confirmation User methods", () => {
       email_confirmation: true,
     });
 
-    user = await createUser(strapi, {
-      ...mockUserData(),
+    user = await createUser({
       confirmed: false,
     });
   });

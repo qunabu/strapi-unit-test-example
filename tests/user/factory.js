@@ -24,18 +24,18 @@ const mockUserData = (options = {}) => {
 
 /**
  * Creates new user in strapi database
- * @param strapi, instance of strapi
  * @param data
  * @returns {object} object of new created user, fetched from database
  */
-const createUser = async (strapi, data) => {
+const createUser = async (data) => {
   /** Gets the default user role */
   const defaultRole = await strapi
     .query("role", "users-permissions")
     .findOne({}, []);
   /** Creates a new user and push to database */
   return await strapi.plugins["users-permissions"].services.user.add({
-    ...(data || mockUserData()),
+    ...mockUserData(),
+    ...data,
     role: defaultRole ? defaultRole.id : null,
   });
 };

@@ -1,40 +1,22 @@
+const { describe, it, expect, beforeAll } = require('@jest/globals');
 const request = require("supertest");
-const userFactory = require("./../user/factory");
-const { jwt, grantPrivilege } = require("./../helpers/strapi");
-describe("Hello methods", () => {
+const { createUser } = require("../user/factory");
+const { jwt, grantPrivilege } = require("../helpers/strapi");
+
+describe("Todo-list methods", () => {
   let user;
 
   beforeAll(async () => {
-    user = await userFactory.createUser(strapi);
+    user = await createUser();
     await grantPrivilege(1, "permissions.application.controllers[\'todo-list\'].find"); // 1 is default role for new confirmed users
   });
 
   it("should return a list of todos", async () => {
-    await request(strapi.server) // app server is and instance of Class: http.Server
+    const response = await request(strapi.server) // app server is and instance of Class: http.Server
       .get("/todo-lists")
-      .expect(200) // Expect response http code 200
-      .then((data) => {
-        expect(data.text).toBe([]); // expect the response text
-      });
-  });
+      .set('Authorization', `Bearer ${jwt(user.id)}`);
 
-  it("should return 403 error", async () => {
-    await request(strapi.server) // app server is and instance of Class: http.Server
-      .get("/hi")
-      .expect(403) // Expect response http code 403
-      .then((data) => {
-        expect(data.body.error).toBe("Forbidden"); // expect the response error
-      });
-  });
-
-  it("should return `Hi ${user.username}`", async () => {
-    const token = await jwt(user.id);
-    await request(strapi.server) // app server is and instance of Class: http.Server
-      .get("/hi")
-      .set("Authorization", "Bearer " + token)
-      .expect(200) // Expect response http code 200
-      .then((data) => {
-        expect(data.text).toBe(`Hi ${user.username}`); // expect the response welcome text
-      });
+    expect(response.body).toStrictEqual([]); // expect the response text
+    expect(response.status).toBe(200); // expect response http code 200
   });
 });

@@ -2,6 +2,7 @@ const Strapi = require("strapi");
 const http = require("http");
 
 let instance;
+
 jest.setTimeout(30000);
 
 /**
@@ -25,7 +26,7 @@ async function setupStrapi() {
  * Returns valid JWT token for authenticated
  * @param {String | number} idOrEmail, either user id, or email
  */
-const jwt = async (idOrEmail) =>
+const jwt = (idOrEmail) =>
   strapi.plugins["users-permissions"].services.jwt.issue({
     [Number.isInteger(idOrEmail) ? "id" : "email"]: idOrEmail,
   });

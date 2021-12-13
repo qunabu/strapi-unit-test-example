@@ -1,28 +1,28 @@
+const { describe, beforeEach, it, expect } = require('@jest/globals');
 const request = require("supertest");
-const userFactory = require("./../user/factory");
 const nodemailerMock = require("nodemailer-mock");
+const {createUser} = require("../user/factory");
 
 describe("Reset password", () => {
   let user;
 
-  beforeAll(async () => {
-    user = await userFactory.createUser(strapi);
+  beforeEach(async () => {
+    user = await createUser();
   });
 
   it("should reset password, send email with link, link should change password", async () => {
     const newPassword = "newPassword";
     // 1. send emil to forgot password
 
-    await request(strapi.server) // app server is and instance of Class: http.Server
+    let response = await request(strapi.server) // app server is and instance of Class: http.Server
       .post("/auth/forgot-password")
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
-      .send({ email: user.email })
+      .send({email: user.email})
       .expect("Content-Type", /json/)
       .expect(200)
-      .then((response) => {
-        expect(response.body.ok).toBe(true);
-      });
+
+    expect(response.body.ok).toBe(true);
 
     const emailsSent = nodemailerMock.mock.getSentMail();
     // at least one email should be sent now
@@ -50,7 +50,7 @@ describe("Reset password", () => {
 
     // 3. change password
 
-    await request(strapi.server) // app server is and instance of Class: http.Server
+    response = await request(strapi.server) // app server is and instance of Class: http.Server
       .post("/auth/reset-password")
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
@@ -59,17 +59,17 @@ describe("Reset password", () => {
         passwordConfirmation: newPassword,
         code: code,
       })
-      .expect("Content-Type", /json/)
-      .expect(200)
-      .then((response) => {
-        expect(response.body.jwt).toBeDefined();
-        expect(response.body.user.username).toBe(user.username);
-        expect(response.body.user.email).toBe(user.email);
-      });
+      .expect("Content-Type", /json/);
+
+    expect(response.body.jwt).toBeDefined();
+    expect(response.body.user.username).toBe(user.username);
+    expect(response.body.user.email).toBe(user.email);
+    expect(response.status).toBe(200);
+    expect(response.body.jwt).toBeDefined();
 
     // 4. test if password has changed
 
-    await request(strapi.server) // app server is and instance of Class: http.Server
+    response = await request(strapi.server) // app server is and instance of Class: http.Server
       .post("/auth/local")
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
@@ -77,12 +77,11 @@ describe("Reset password", () => {
         identifier: user.email,
         password: newPassword,
       })
-      .expect("Content-Type", /json/)
-      .expect(200)
-      .then((response) => {
-        expect(response.body.jwt).toBeDefined();
-        expect(response.body.user.username).toBe(user.username);
-        expect(response.body.user.email).toBe(user.email);
-      });
+      .expect("Content-Type", /json/);
+
+    expect(response.body.jwt).toBeDefined();
+    expect(response.body.user.username).toBe(user.username);
+    expect(response.body.user.email).toBe(user.email);
+    expect(response.status).toBe(200);
   });
 });
