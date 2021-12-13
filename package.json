@@ -13,10 +13,7 @@
     "test:clear": "jest --clearCache"
   },
   "dependencies": {
-    "jest": "26.6.3",
-    "jest-junit": "^13.0.0",
     "knex": "^0.95.14",
-    "nodemailer-mock": "^1.5.11",
     "sqlite3": "latest",
     "strapi": "3.6.8",
     "strapi-admin": "3.6.8",
@@ -27,8 +24,7 @@
     "strapi-plugin-email": "3.6.8",
     "strapi-plugin-upload": "3.6.8",
     "strapi-plugin-users-permissions": "3.6.8",
-    "strapi-utils": "3.6.8",
-    "supertest": "^6.1.6"
+    "strapi-utils": "3.6.8"
   },
   "author": {
     "name": "A Strapi developer"
@@ -54,6 +50,10 @@
     "outputName": "junit.xml"
   },
   "devDependencies": {
-    "@jest/globals": "^27.4.4"
+    "@jest/globals": "^27.4.4",
+    "jest": "26.6.3",
+    "jest-junit": "^13.0.0",
+    "nodemailer-mock": "^1.5.11",
+    "supertest": "^6.1.6"
   }
 }
