@@ -8,8 +8,6 @@ on:
 
 jobs:
   tests-jest-integration:
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
         #node-version: [10.x, 12.x, 14.x, 15.x]
@@ -17,8 +15,11 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - name: Instantiate package
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
 
       - name: Install Dependencies
         run: yarn install --immutable
