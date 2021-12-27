@@ -17,7 +17,7 @@ Related articles
 
 ## Tests status CI/CD:
 
-[![qunabu](https://circleci.com/gh/qunabu/strapi-unit-test-example.svg?style=shield)](https://circleci.com/gh/qunabu/strapi-unit-test-example) (click the badge to see the results)
+[![Tests Code Coverage](https://github.com/qunabu/strapi-unit-test-example/actions/workflows/test-cc.yml/badge.svg)](https://github.com/qunabu/strapi-unit-test-example/actions/workflows/test-cc.yml)
 
 ## Running tests
 
