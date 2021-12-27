@@ -23,7 +23,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install Dependencies
-        run: yarn install --immutable
+        run: npm_config_build_from_source=true yarn install
 
       - name: Run Tests
         run: yarn test
