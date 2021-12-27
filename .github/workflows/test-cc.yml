@@ -1,0 +1,29 @@
+name: Tests Code Coverage
+
+jobs:
+  phpunit-code-coverage:
+    runs-on: ubuntu-latest
+    container:
+      image: node:14
+
+      - name: Instantiate package
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+      - name: Update composer
+        run: composer update
+
+      - name: Run Tests
+        run: yarn test
+
+      #- name: Run tests
+      #  run: XDEBUG_MODE=coverage vendor/bin/phpunit  --coverage-clover coverage.xml
+
+      - name: Code Coverage upload
+        uses: codecov/codecov-action@v2
+         with:
+    
+          files: ./coverage/clover.xml # optional
+
