@@ -23,9 +23,6 @@ jobs:
       - name: Install Dependencies
         run: yarn install --immutable
 
-      - name: Update composer
-        run: composer update
-
       - name: Run Tests
         run: yarn test
 
