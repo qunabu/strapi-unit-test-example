@@ -6,12 +6,11 @@ const nodemailerMock = require("nodemailer-mock");
 describe("Default User methods", () => {
   let user;
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     user = await createUser(strapi);
-    done();
   });
 
-  it("should login user and return jwt token", async (done) => {
+  it("should login user and return jwt token", async () => {
     const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
       id: user.id,
     });
@@ -33,11 +32,9 @@ describe("Default User methods", () => {
         ].services.jwt.verify(data.body.jwt);
         expect(data.body.jwt == jwt || !!verified).toBe(true); // jwt does have a random seed, each issue can be different
       });
-
-    done();
   });
 
-  it("should return users data for authenticated user", async (done) => {
+  it("should return users data for authenticated user", async () => {
     const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
       id: user.id,
     });
@@ -55,11 +52,9 @@ describe("Default User methods", () => {
         expect(data.body.username).toBe(user.username);
         expect(data.body.email).toBe(user.email);
       });
-
-    done();
   });
 
-  it("should allow register users ", async (done) => {
+  it("should allow register users ", async () => {
     await request(strapi.server) // app server is and instance of Class: http.Server
       .post("/auth/local/register")
       .set("accept", "application/json")
@@ -74,15 +69,13 @@ describe("Default User methods", () => {
         expect(data.body.jwt).toBeDefined();
         expect(data.body.user).toBeDefined();
       });
-
-    done();
   });
 });
 
 describe("Confirmation User methods", () => {
   let user;
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     await updatePluginStore("users-permissions", "advanced", {
       email_confirmation: true,
     });
@@ -91,17 +84,15 @@ describe("Confirmation User methods", () => {
       ...mockUserData(),
       confirmed: false,
     });
-    done();
   });
 
-  afterAll(async (done) => {
+  afterAll(async () => {
     await updatePluginStore("users-permissions", "advanced", {
       email_confirmation: false,
     });
-    done();
   });
 
-  it("unconfirmed user should not login", async (done) => {
+  it("unconfirmed user should not login", async () => {
     await request(strapi.server) // app server is and instance of Class: http.Server
       .post("/auth/local")
       .set("accept", "application/json")
@@ -117,12 +108,11 @@ describe("Confirmation User methods", () => {
           true
         );
       });
-    done();
   });
 
-  // it("registartion of new user should send email", async (done) => {});
+  // it("registartion of new user should send email", async () => {});
 
-  it("should register, send email with confirmation link, link should confirm account", async (done) => {
+  it("should register, send email with confirmation link, link should confirm account", async () => {
     const userData = mockUserData();
     // 1. send a request to register new user
 
@@ -214,7 +204,5 @@ describe("Confirmation User methods", () => {
       .then((data) => {
         expect(data.body.jwt).toBeDefined();
       });
-
-    done();
   });
 });

@@ -1,0 +1,35 @@
+name: Tests Code Coverage
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+
+jobs:
+  tests-jest-integration:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        #node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+      - name: Run Tests
+        run: yarn test
+
+      - name: Code Coverage upload
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./coverage/clover.xml # optional
+
