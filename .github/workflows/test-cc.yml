@@ -1,5 +1,11 @@
 name: Tests Code Coverage
 
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+
 jobs:
   tests-jest-integration:
     runs-on: ubuntu-latest
