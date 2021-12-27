@@ -1,8 +1,13 @@
 const Strapi = require("strapi");
 const http = require("http");
+const fs = require("fs");
 
 let instance;
 jest.setTimeout(30000);
+
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
 
 /**
  * Setups strapi for futher testing
@@ -12,11 +17,38 @@ async function setupStrapi() {
     /** the follwing code in copied from `./node_modules/strapi/lib/Strapi.js` */
     await Strapi().load();
     instance = strapi; // strapi is global now
+
     await instance.app
       .use(instance.router.routes()) // populate KOA routes
       .use(instance.router.allowedMethods()); // populate KOA methods
+  }
+  return instance;
+}
 
-    instance.server = http.createServer(instance.app.callback());
+/**
+ * Closes strapi after testing
+ */
+async function stopStrapi() {
+  if (instance) {
+    for (const conn of Object.values(instance.connections)) {
+      if ("destroy" in conn) {
+        await conn.destroy();
+      }
+    }
+
+    instance.db.destroy();
+    instance.server.destroy();
+
+    const dbSettings = strapi.config.get(
+      "database.connections.default.settings"
+    );
+
+    if (dbSettings && dbSettings.filename) {
+      const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
+      if (fs.existsSync(tmpDbFile)) {
+        fs.unlinkSync(tmpDbFile);
+      }
+    }
   }
   return instance;
 }
@@ -58,7 +90,7 @@ const grantPrivilege = async (
  */
 
 const grantPrivileges = async (roleID = 1, values = []) => {
-  await Promise.all(values.map(val => grantPrivilege(roleID, val)));
+  await Promise.all(values.map((val) => grantPrivilege(roleID, val)));
 };
 
 /**
@@ -130,10 +162,12 @@ const responseHasError = (errorId, response) => {
 
 module.exports = {
   setupStrapi,
+  stopStrapi,
   jwt,
   grantPrivilege,
   grantPrivileges,
   updatePluginStore,
   getPluginStore,
   responseHasError,
+  sleep,
 };
