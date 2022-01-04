@@ -1,0 +1,47 @@
+name: Tests Code Coverage
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+
+jobs:
+  tests-jest-integration:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        #node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm_config_build_from_source=true yarn install
+
+      - name: Run Tests
+        run: yarn test
+
+      - name: Code Coverage upload
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./coverage/clover.xml # optional
+
+      - name: Setup Code Climate test-reporter
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+
+      - name: Convert
+        run: ./cc-test-reporter format-coverage ./coverage/clover.xml -t clover -o codeclimate.0.json
+
+      - name: Upload
+        run: ./cc-test-reporter upload-coverage -i codeclimate.0.json
+        env:
+          CC_TEST_REPORTER_ID: c7bebebe81a5ec3e4b50d45abfb4f4974e289e2ff43afcdba9fe26e654e8b0e0

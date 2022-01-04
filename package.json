@@ -13,7 +13,7 @@
     "test:clear": "jest --clearCache"
   },
   "dependencies": {
-    "knex": "^0.95.14",
+    "knex": "^0.95.15",
     "sqlite3": "latest",
     "strapi": "3.6.8",
     "strapi-admin": "3.6.8",
@@ -24,7 +24,8 @@
     "strapi-plugin-email": "3.6.8",
     "strapi-plugin-upload": "3.6.8",
     "strapi-plugin-users-permissions": "3.6.8",
-    "strapi-utils": "3.6.8"
+    "strapi-utils": "3.6.8",
+    "supertest": "^6.1.6"
   },
   "author": {
     "name": "A Strapi developer"
@@ -38,6 +39,15 @@
   },
   "license": "MIT",
   "jest": {
+    "coverageReporters": [
+      "clover",
+      "json",
+      "lcov",
+      ["text", {
+          "skipFull": true
+        }
+      ]
+    ],
     "testPathIgnorePatterns": [
       "/node_modules/",
       ".tmp",

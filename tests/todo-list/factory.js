@@ -28,7 +28,7 @@ const mockTodoData = (options = {}) => {
  */
 const createTodo = async (data) => {
   /** Creates a new task and push it to database */
-  return await strapi.services['todo-list'].create({
+  return strapi.services['todo-list'].create({
     ...(data || mockTodoData()),
   });
 };

@@ -110,7 +110,7 @@ describe("Confirmation User methods", () => {
       });
   });
 
-  // it("registration of new user should send email", async () => {});
+  // it("registartion of new user should send email", async () => {});
 
   it("should register, send email with confirmation link, link should confirm account", async () => {
     const userData = mockUserData();

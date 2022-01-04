@@ -1,12 +1,8 @@
 const { beforeAll, afterAll, describe, it, expect } = require('@jest/globals');
 const fs = require("fs");
-const { setupStrapi } = require("./helpers/strapi");
+const { setupStrapi, stopStrapi, sleep} = require("./helpers/strapi");
 
 jest.setTimeout(30000);
-
-const sleep = (milliseconds) => {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
-};
 
 /** this code is called once before any test is called */
 beforeAll(async () => {
@@ -27,6 +23,7 @@ afterAll(async () => {
       fs.unlinkSync(tmpDbFile);
     }
   }
+  await stopStrapi();
 });
 
 describe("Strapi in general", () => {
