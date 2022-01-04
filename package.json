@@ -8,8 +8,8 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "NODE_ENV=test ./node_modules/.bin/jest --forceExit --runInBand --cache --detectOpenHandles",
-    "test:watch": "NODE_ENV=test ./node_modules/.bin/jest --watchAll --runInBand --cache --detectOpenHandles",
+    "test": "NODE_ENV=test ./node_modules/.bin/jest --forceExit --runInBand --cache --detectOpenHandles --coverage=true",
+    "test:watch": "NODE_ENV=test ./node_modules/.bin/jest --watchAll --runInBand --cache --detectOpenHandles --coverage=true",
     "test:clear": "jest --clearCache"
   },
   "dependencies": {
