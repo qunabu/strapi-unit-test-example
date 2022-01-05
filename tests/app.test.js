@@ -1,5 +1,6 @@
+const { beforeAll, afterAll, describe, it, expect } = require('@jest/globals');
 const fs = require("fs");
-const { setupStrapi, stopStrapi } = require("./helpers/strapi");
+const { setupStrapi, stopStrapi, sleep} = require("./helpers/strapi");
 
 jest.setTimeout(30000);
 
@@ -10,6 +11,18 @@ beforeAll(async () => {
 
 /** this code is called once before all the tested are finished */
 afterAll(async () => {
+  await strapi.server.close();
+  await sleep(1000); // clear database connection
+
+  const dbSettings = strapi.config.get("database.connections.default.settings");
+
+  //delete test database after all tests
+  if (dbSettings && dbSettings.filename) {
+    const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
+    if (fs.existsSync(tmpDbFile)) {
+      fs.unlinkSync(tmpDbFile);
+    }
+  }
   await stopStrapi();
 });
 
@@ -22,3 +35,4 @@ describe("Strapi in general", () => {
 require("./hello");
 require("./user");
 require("./password");
+require("./todo-list");

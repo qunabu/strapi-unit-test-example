@@ -8,12 +8,12 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --forceExit --coverage=true"
+    "test": "NODE_ENV=test ./node_modules/.bin/jest --forceExit --runInBand --cache --detectOpenHandles --coverage=true",
+    "test:watch": "NODE_ENV=test ./node_modules/.bin/jest --watchAll --runInBand --cache --detectOpenHandles --coverage=true",
+    "test:clear": "jest --clearCache"
   },
   "dependencies": {
-    "jest": "^27.4.0",
-    "knex": "^0.21.5",
-    "nodemailer-mock": "^1.5.3",
+    "knex": "^0.95.15",
     "sqlite3": "latest",
     "strapi": "3.6.8",
     "strapi-admin": "3.6.8",
@@ -25,7 +25,7 @@
     "strapi-plugin-upload": "3.6.8",
     "strapi-plugin-users-permissions": "3.6.8",
     "strapi-utils": "3.6.8",
-    "supertest": "^4.0.2"
+    "supertest": "^6.1.6"
   },
   "author": {
     "name": "A Strapi developer"
@@ -43,9 +43,7 @@
       "clover",
       "json",
       "lcov",
-      [
-        "text",
-        {
+      ["text", {
           "skipFull": true
         }
       ]
@@ -56,5 +54,16 @@
       ".cache"
     ],
     "testEnvironment": "node"
+  },
+  "jest-junit": {
+    "outputDirectory": "./test-results",
+    "outputName": "junit.xml"
+  },
+  "devDependencies": {
+    "@jest/globals": "^27.4.4",
+    "jest": "26.6.3",
+    "jest-junit": "^13.0.0",
+    "nodemailer-mock": "^1.5.11",
+    "supertest": "^6.1.6"
   }
 }

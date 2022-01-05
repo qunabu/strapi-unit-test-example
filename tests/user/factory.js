@@ -6,6 +6,7 @@ const defaultData = {
   provider: "local",
   confirmed: true,
 };
+
 /**
  * Returns random username object for user creation
  * @param {object} options that overwrites default options
@@ -19,22 +20,22 @@ const mockUserData = (options = {}) => {
     ...defaultData,
     ...options,
   };
-  return;
 };
+
 /**
  * Creates new user in strapi database
- * @param strapi, instance of strapi
- * @param options that overwrites default options
+ * @param data
  * @returns {object} object of new created user, fetched from database
  */
-const createUser = async (strapi, data) => {
+const createUser = async (data) => {
   /** Gets the default user role */
   const defaultRole = await strapi
     .query("role", "users-permissions")
     .findOne({}, []);
-  /** Creates a new user an push to database */
-  return await strapi.plugins["users-permissions"].services.user.add({
-    ...(data || mockUserData()),
+  /** Creates a new user and push to database */
+  return strapi.plugins["users-permissions"].services.user.add({
+    ...mockUserData(),
+    ...data,
     role: defaultRole ? defaultRole.id : null,
   });
 };

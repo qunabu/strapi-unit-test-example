@@ -1,3 +1,4 @@
+const { describe, beforeAll, afterAll, it, expect } = require('@jest/globals');
 const request = require("supertest");
 const { updatePluginStore, responseHasError } = require("./../helpers/strapi");
 const { createUser, defaultData, mockUserData } = require("./factory");
@@ -7,7 +8,7 @@ describe("Default User methods", () => {
   let user;
 
   beforeAll(async () => {
-    user = await createUser(strapi);
+    user = await createUser();
   });
 
   it("should login user and return jwt token", async () => {
@@ -30,7 +31,7 @@ describe("Default User methods", () => {
         const verified = await strapi.plugins[
           "users-permissions"
         ].services.jwt.verify(data.body.jwt);
-        expect(data.body.jwt == jwt || !!verified).toBe(true); // jwt does have a random seed, each issue can be different
+        expect(data.body.jwt === jwt || !!verified).toBe(true); // jwt does have a random seed, each issue can be different
       });
   });
 
@@ -80,8 +81,7 @@ describe("Confirmation User methods", () => {
       email_confirmation: true,
     });
 
-    user = await createUser(strapi, {
-      ...mockUserData(),
+    user = await createUser({
       confirmed: false,
     });
   });
@@ -163,7 +163,7 @@ describe("Confirmation User methods", () => {
 
     // 5. fetch and test confirmation link from email content
 
-    const confirmRegEx = /\A?confirmation=[^&|\s|<|"]+&*/g;
+    const confirmRegEx = /\A?confirmation=[^&|\s<"]+&*/g;
     const confirmationLink = emailsSent.reduce((acc, curr) => {
       return (
         (curr.text &&

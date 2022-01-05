@@ -1,8 +1,8 @@
 const Strapi = require("strapi");
-const http = require("http");
 const fs = require("fs");
 
 let instance;
+
 jest.setTimeout(30000);
 
 const sleep = (milliseconds) => {
@@ -57,7 +57,7 @@ async function stopStrapi() {
  * Returns valid JWT token for authenticated
  * @param {String | number} idOrEmail, either user id, or email
  */
-const jwt = async (idOrEmail) =>
+const jwt = (idOrEmail) =>
   strapi.plugins["users-permissions"].services.jwt.issue({
     [Number.isInteger(idOrEmail) ? "id" : "email"]: idOrEmail,
   });
@@ -77,10 +77,10 @@ const grantPrivilege = async (
   policy = ""
 ) => {
   const updateObj = value
-    .split(".")
+    .match(/[a-zA-Z-]+[^.|^[\]']/gm)
     .reduceRight((obj, next) => ({ [next]: obj }), { enabled, policy });
 
-  return await strapi.plugins[
+  return strapi.plugins[
     "users-permissions"
   ].services.userspermissions.updateRole(roleID, updateObj);
 };
@@ -144,8 +144,7 @@ const getPluginStore = (pluginName, key, environment = "") => {
  * responseHasError("Auth.form.error.confirmed", response) // true
  */
 const responseHasError = (errorId, response) => {
-  if (
-    response &&
+  return !!(response &&
     response.message &&
     Array.isArray(response.message) &&
     response.message.find(
@@ -153,11 +152,8 @@ const responseHasError = (errorId, response) => {
         entry.messages &&
         Array.isArray(entry.messages) &&
         entry.messages.find((msg) => msg.id && msg.id === errorId)
-    )
-  ) {
-    return true;
-  }
-  return false;
+    ));
+
 };
 
 module.exports = {

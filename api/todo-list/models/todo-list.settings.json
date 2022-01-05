@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "todo_lists",
+  "info": {
+    "name": "todo-list",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
