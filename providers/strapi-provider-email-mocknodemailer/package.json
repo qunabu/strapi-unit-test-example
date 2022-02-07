@@ -1,6 +1,6 @@
 {
-  "name": "strapi-provider-email-mocknodemailer",
-  "version": "3.0.0",
+  "name": "@strapi/provider-email-mocknodemailer",
+  "version": "4.0.0",
   "description": "Sendmail provider for strapi email",
   "homepage": "http://strapi.io",
   "keywords": [
@@ -23,11 +23,13 @@
     "name": "Strapi team",
     "url": "http://strapi.io"
   },
-  "maintainers": [{
-    "name": "Strapi team",
-    "email": "hi@strapi.io",
-    "url": "http://strapi.io"
-  }],
+  "maintainers": [
+    {
+      "name": "Strapi team",
+      "email": "hi@strapi.io",
+      "url": "http://strapi.io"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/strapi/strapi.git"

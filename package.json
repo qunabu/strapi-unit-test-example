@@ -7,46 +7,39 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi",
-    "test": "NODE_ENV=test ./node_modules/.bin/jest --forceExit --runInBand --cache --detectOpenHandles --coverage=true",
-    "test:watch": "NODE_ENV=test ./node_modules/.bin/jest --watchAll --runInBand --cache --detectOpenHandles --coverage=true",
-    "test:clear": "jest --clearCache"
+    "strapi": "strapi"
+  },
+  "devDependencies": {
+    "jest": "^27.5.0",
+    "nodemailer-mock": "^1.5.11",
+    "supertest": "^6.2.2"
   },
   "dependencies": {
-    "knex": "^0.95.15",
-    "sqlite3": "latest",
-    "strapi": "3.6.8",
-    "strapi-admin": "3.6.8",
-    "strapi-connector-bookshelf": "3.6.8",
-    "strapi-plugin-content-manager": "3.6.8",
-    "strapi-plugin-content-type-builder": "3.6.8",
-    "strapi-plugin-documentation": "3.6.8",
-    "strapi-plugin-email": "3.6.8",
-    "strapi-plugin-upload": "3.6.8",
-    "strapi-plugin-users-permissions": "3.6.8",
-    "strapi-utils": "3.6.8",
-    "supertest": "^6.1.6"
+    "@strapi/plugin-i18n": "4.0.7",
+    "@strapi/plugin-users-permissions": "4.0.7",
+    "@strapi/strapi": "4.0.7",
+    "sqlite3": "5.0.2",
+    "@strapi/provider-email-mocknodemailer": "file:providers/strapi-provider-email-mocknodemailer"
   },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "c9843926-8635-4cfb-82f3-110be3e6de30"
+    "uuid": "959d5749-f0a6-4487-884f-edd899440417"
   },
   "engines": {
-    "node": ">=10.0.0",
+    "node": ">=12.x.x <=16.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT",
   "jest": {
+    "collectCoverageFrom": [
+      "src/api/**/*.js"
+    ],
     "coverageReporters": [
       "clover",
       "json",
-      "lcov",
-      ["text", {
-          "skipFull": true
-        }
-      ]
+      "text"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
@@ -54,16 +47,5 @@
       ".cache"
     ],
     "testEnvironment": "node"
-  },
-  "jest-junit": {
-    "outputDirectory": "./test-results",
-    "outputName": "junit.xml"
-  },
-  "devDependencies": {
-    "@jest/globals": "^27.4.4",
-    "jest": "26.6.3",
-    "jest-junit": "^13.0.0",
-    "nodemailer-mock": "^1.5.11",
-    "supertest": "^6.1.6"
   }
 }

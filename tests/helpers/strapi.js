@@ -1,13 +1,18 @@
-const Strapi = require("strapi");
+const Strapi = require("@strapi/strapi");
 const fs = require("fs");
+const _ = require("lodash");
 
 let instance;
-
-jest.setTimeout(30000);
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
+
+const waitForServer = () =>
+  new Promise((resolve, reject) => {
+    const { host, port } = strapi.config.get("server");
+    resolve(strapi.server.listen(port, host));
+  });
 
 /**
  * Setups strapi for futher testing
@@ -16,11 +21,9 @@ async function setupStrapi() {
   if (!instance) {
     /** the follwing code in copied from `./node_modules/strapi/lib/Strapi.js` */
     await Strapi().load();
-    instance = strapi; // strapi is global now
+    await waitForServer();
 
-    await instance.app
-      .use(instance.router.routes()) // populate KOA routes
-      .use(instance.router.allowedMethods()); // populate KOA methods
+    instance = strapi; // strapi is global now
   }
   return instance;
 }
@@ -30,24 +33,14 @@ async function setupStrapi() {
  */
 async function stopStrapi() {
   if (instance) {
-    for (const conn of Object.values(instance.connections)) {
-      if ("destroy" in conn) {
-        await conn.destroy();
-      }
-    }
-
-    instance.db.destroy();
-    instance.server.destroy();
-
-    const dbSettings = strapi.config.get(
-      "database.connections.default.settings"
+    const tmpDbFile = strapi.config.get(
+      "database.connection.connection.filename"
     );
 
-    if (dbSettings && dbSettings.filename) {
-      const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
-      if (fs.existsSync(tmpDbFile)) {
-        fs.unlinkSync(tmpDbFile);
-      }
+    instance.destroy();
+
+    if (fs.existsSync(tmpDbFile)) {
+      fs.unlinkSync(tmpDbFile);
     }
   }
   return instance;
@@ -72,17 +65,17 @@ const jwt = (idOrEmail) =>
  */
 const grantPrivilege = async (
   roleID = 1,
-  value,
+  path,
   enabled = true,
   policy = ""
 ) => {
-  const updateObj = value
-    .match(/[a-zA-Z-]+[^.|^[\]']/gm)
-    .reduceRight((obj, next) => ({ [next]: obj }), { enabled, policy });
+  const service = strapi.plugin("users-permissions").service("role");
 
-  return strapi.plugins[
-    "users-permissions"
-  ].services.userspermissions.updateRole(roleID, updateObj);
+  const role = await service.getRole(roleID);
+
+  _.set(role.permissions, path, { enabled, policy });
+
+  return service.updateRole(roleID, role);
 };
 
 /** Updates database `permissions` that role can access an endpoint
@@ -140,20 +133,19 @@ const getPluginStore = (pluginName, key, environment = "") => {
  * @param {object} response Response object from strapi controller
  * @example
  *
- * const response =  {"statusCode":400,"error":"Bad Request","message":[{"messages":[{"id":"Auth.form.error.confirmed","message":"Your account email is not confirmed"}]}],"data":[{"messages":[{"id":"Auth.form.error.confirmed","message":"Your account email is not confirmed"}]}]}
- * responseHasError("Auth.form.error.confirmed", response) // true
+ * const response =  {
+      data: null,
+      error: {
+        status: 400,
+        name: 'ApplicationError',
+        message: 'Your account email is not confirmed',
+        details: {}
+      }
+    }
+ * responseHasError("ApplicationError", response) // true
  */
 const responseHasError = (errorId, response) => {
-  return !!(response &&
-    response.message &&
-    Array.isArray(response.message) &&
-    response.message.find(
-      (entry) =>
-        entry.messages &&
-        Array.isArray(entry.messages) &&
-        entry.messages.find((msg) => msg.id && msg.id === errorId)
-    ));
-
+  return response && response.error && response.error.name === errorId;
 };
 
 module.exports = {
