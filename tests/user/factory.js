@@ -29,15 +29,28 @@ const mockUserData = (options = {}) => {
  */
 const createUser = async (data) => {
   /** Gets the default user role */
-  const defaultRole = await strapi
-    .query("role", "users-permissions")
-    .findOne({}, []);
-  /** Creates a new user and push to database */
-  return strapi.plugins["users-permissions"].services.user.add({
-    ...mockUserData(),
-    ...data,
-    role: defaultRole ? defaultRole.id : null,
+  const pluginStore = await strapi.store({
+    type: "plugin",
+    name: "users-permissions",
   });
+
+  const settings = await pluginStore.get({
+    key: "advanced",
+  });
+
+  const defaultRole = await strapi
+    .query("plugin::users-permissions.role")
+    .findOne({ where: { type: settings.default_role } });
+
+  /** Creates a new user and push to database */
+  return strapi
+    .plugin("users-permissions")
+    .service("user")
+    .add({
+      ...mockUserData(),
+      ...data,
+      role: defaultRole ? defaultRole.id : null,
+    });
 };
 
 module.exports = {

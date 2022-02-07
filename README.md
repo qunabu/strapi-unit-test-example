@@ -1,5 +1,7 @@
 # Strapi application
 
+[v3 version is on branch](https://github.com/qunabu/strapi-unit-test-example/tree/ver/3)
+
 [![codecov](https://codecov.io/gh/qunabu/strapi-unit-test-example/branch/master/graph/badge.svg?token=PBBNXQQMEG)](https://codecov.io/gh/qunabu/strapi-unit-test-example) [![Test Coverage](https://api.codeclimate.com/v1/badges/85377af836e5874e6684/test_coverage)](https://codeclimate.com/github/qunabu/strapi-unit-test-example/test_coverage)
 
 Example of `jest` integration/functional tests with Strapi.

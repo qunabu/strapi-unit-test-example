@@ -95,7 +95,6 @@ results
 node_modules
 .node_history
 
-
 ############################
 # Tests
 ############################
@@ -108,14 +107,10 @@ coverage
 ############################
 
 .env
+license.txt
 exports
-.cache
+*.cache
 build
+.strapi-updater.json
 
-############################
-# junit test covarage
-############################
-junit.xml
-**/junit.xml
-
-testing.md
+coverage

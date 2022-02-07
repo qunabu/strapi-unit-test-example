@@ -1,7 +1,9 @@
 module.exports = () => ({
   email: {
-    provider: "mocknodemailer",
-    providerOptions: {},
-    settings: {},
+    config: {
+      provider: "mocknodemailer",
+      providerOptions: {},
+      settings: {},
+    },
   },
 });

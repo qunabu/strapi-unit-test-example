@@ -6,8 +6,11 @@ module.exports = ({ env }) => ({
     connection: {
       filename: path.join(
         __dirname,
-        "..",
-        env("DATABASE_FILENAME", ".tmp/data.db")
+        "../../..",
+        env(
+          "DATABASE_FILENAME",
+          `.tmp/test${Math.round(Math.random() * 10000)}.db`
+        )
       ),
     },
     useNullAsDefault: true,
