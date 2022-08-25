@@ -25,6 +25,9 @@ jobs:
       - name: Install Dependencies
         run: yarn install
 
+      - name: Create env file
+        run: cp .env.ci .env
+
       - name: Run Tests
         run: yarn test
         timeout-minutes: 3
