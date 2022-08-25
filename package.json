@@ -8,7 +8,7 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --runInBand --coverage=true --detectOpenHandles"
+    "test": "jest --runInBand --coverage=true"
   },
   "devDependencies": {
     "jest": "^27.5.0",
@@ -18,9 +18,9 @@
   "dependencies": {
     "@strapi/plugin-i18n": "4.3.6",
     "@strapi/plugin-users-permissions": "4.3.6",
+    "@strapi/provider-email-mocknodemailer": "file:providers/strapi-provider-email-mocknodemailer",
     "@strapi/strapi": "4.3.6",
-    "sqlite3": "5.0.2",
-    "@strapi/provider-email-mocknodemailer": "file:providers/strapi-provider-email-mocknodemailer"
+    "sqlite3": "5.0.2"
   },
   "author": {
     "name": "Mateusz Wojczal <mateusz@wojczal.com>"

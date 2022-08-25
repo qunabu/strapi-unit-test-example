@@ -10,8 +10,31 @@ const sleep = (milliseconds) => {
 
 const waitForServer = () =>
   new Promise((resolve, reject) => {
+    const onListen = async (error) => {
+      if (error) {
+        return reject(error);
+      }
+
+      try {
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+    const listenSocket = strapi.config.get("server.socket");
+
+    if (listenSocket) {
+      strapi.server.listen(listenSocket, onListen);
+    } else {
+      const { host, port } = strapi.config.get("server");
+      strapi.server.listen(port, host, onListen);
+    }
+    /*
+
     const { host, port } = strapi.config.get("server");
     resolve(strapi.server.listen(port, host));
+    */
   });
 
 /**
@@ -33,15 +56,9 @@ async function setupStrapi() {
  */
 async function stopStrapi() {
   if (instance) {
-    const tmpDbFile = strapi.config.get(
-      "database.connection.connection.filename"
-    );
-
     instance.destroy();
 
-    if (fs.existsSync(tmpDbFile)) {
-      fs.unlinkSync(tmpDbFile);
-    }
+    instance = null;
   }
   return instance;
 }
