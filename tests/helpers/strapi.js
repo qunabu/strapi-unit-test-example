@@ -10,8 +10,27 @@ const sleep = (milliseconds) => {
 
 const waitForServer = () =>
   new Promise((resolve, reject) => {
-    const { host, port } = strapi.config.get("server");
-    resolve(strapi.server.listen(port, host));
+    const onListen = async (error) => {
+      if (error) {
+        return reject(error);
+      }
+
+      try {
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+    const listenSocket = strapi.config.get("server.socket");
+
+    if (listenSocket) {
+      strapi.server.listen(listenSocket, onListen);
+    } else {
+      const { host, port } = strapi.config.get("server");
+      strapi.server.listen(port, host, onListen);
+    }
+
   });
 
 /**
@@ -33,11 +52,12 @@ async function setupStrapi() {
  */
 async function stopStrapi() {
   if (instance) {
+    
+    instance.destroy();
+    
     const tmpDbFile = strapi.config.get(
       "database.connection.connection.filename"
     );
-
-    instance.destroy();
 
     if (fs.existsSync(tmpDbFile)) {
       fs.unlinkSync(tmpDbFile);
@@ -71,7 +91,7 @@ const grantPrivilege = async (
 ) => {
   const service = strapi.plugin("users-permissions").service("role");
 
-  const role = await service.getRole(roleID);
+  const role = await service.findOne(roleID);
 
   _.set(role.permissions, path, { enabled, policy });
 

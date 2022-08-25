@@ -48,6 +48,8 @@ describe("Confirmation User e2e test", () => {
   it("should register, send email with confirmation link, link should confirm account", async () => {
     const userData = mockUserData();
 
+    let userId;
+
     // 1. send a request to register new user
 
     await request(strapi.server.httpServer) // app server is and instance of Class: http.Server
@@ -60,12 +62,15 @@ describe("Confirmation User e2e test", () => {
       .then((response) => {
         expect(response.body.user.username).toBe(userData.username);
         expect(response.body.user.email).toBe(userData.email);
+        userId = response.body.user.id;
       });
 
-    // 2. test if user exsits in database now and it is not cofirmed
-    let user = await strapi.plugins["users-permissions"].services.user.fetch({
-      username: userData.username,
-    });
+    // 2. test if user exists in database now and it is not confirmed
+
+    let user = await strapi.plugins["users-permissions"].services.user.fetch(
+      userId
+    );
+
 
     expect(user.username).toBe(userData.username);
     expect(user.email).toBe(userData.email);
@@ -116,9 +121,9 @@ describe("Confirmation User e2e test", () => {
 
     // 7. check in database if user in confirmed now, link from email was clicked
 
-    user = await strapi.plugins["users-permissions"].services.user.fetch({
-      username: userData.username,
-    });
+    user = user = await strapi.plugins["users-permissions"].services.user.fetch(
+      userId
+    );
 
     expect(user.confirmed).toBe(true);
 

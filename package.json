@@ -16,14 +16,14 @@
     "supertest": "^6.2.2"
   },
   "dependencies": {
-    "@strapi/plugin-i18n": "4.0.7",
-    "@strapi/plugin-users-permissions": "4.0.7",
-    "@strapi/strapi": "4.0.7",
-    "sqlite3": "5.0.2",
-    "@strapi/provider-email-mocknodemailer": "file:providers/strapi-provider-email-mocknodemailer"
+    "@strapi/plugin-i18n": "4.3.6",
+    "@strapi/plugin-users-permissions": "4.3.6",
+    "@strapi/provider-email-mocknodemailer": "file:providers/strapi-provider-email-mocknodemailer",
+    "@strapi/strapi": "4.3.6",
+    "sqlite3": "5.0.2"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Mateusz Wojczal <mateusz@wojczal.com>"
   },
   "strapi": {
     "uuid": "959d5749-f0a6-4487-884f-edd899440417"
