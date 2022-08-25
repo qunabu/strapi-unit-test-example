@@ -30,6 +30,7 @@ const waitForServer = () =>
       const { host, port } = strapi.config.get("server");
       strapi.server.listen(port, host, onListen);
     }
+
   });
 
 /**
@@ -51,9 +52,16 @@ async function setupStrapi() {
  */
 async function stopStrapi() {
   if (instance) {
+    
     instance.destroy();
+    
+    const tmpDbFile = strapi.config.get(
+      "database.connection.connection.filename"
+    );
 
-    instance = null;
+    if (fs.existsSync(tmpDbFile)) {
+      fs.unlinkSync(tmpDbFile);
+    }
   }
   return instance;
 }

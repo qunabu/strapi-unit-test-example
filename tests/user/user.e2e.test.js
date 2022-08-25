@@ -71,6 +71,7 @@ describe("Confirmation User e2e test", () => {
       userId
     );
 
+
     expect(user.username).toBe(userData.username);
     expect(user.email).toBe(userData.email);
 
