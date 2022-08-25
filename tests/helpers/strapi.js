@@ -30,11 +30,6 @@ const waitForServer = () =>
       const { host, port } = strapi.config.get("server");
       strapi.server.listen(port, host, onListen);
     }
-    /*
-
-    const { host, port } = strapi.config.get("server");
-    resolve(strapi.server.listen(port, host));
-    */
   });
 
 /**
