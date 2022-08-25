@@ -8,7 +8,7 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --runInBand --coverage=true"
+    "test": "jest --runInBand --coverage=true --detectOpenHandles"
   },
   "devDependencies": {
     "jest": "^27.5.0",
