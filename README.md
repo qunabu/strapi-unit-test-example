@@ -6,7 +6,7 @@
 
 Example of `jest` integration/functional tests with Strapi.
 
-See main [test file](tests/app.test.js) for details.
+See main [tests folder](tests) for details.
 
 ## Theory
 
