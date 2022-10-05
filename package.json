@@ -16,10 +16,10 @@
     "supertest": "^6.2.2"
   },
   "dependencies": {
-    "@strapi/plugin-i18n": "4.3.6",
-    "@strapi/plugin-users-permissions": "4.3.6",
+    "@strapi/plugin-i18n": "4.2.2",
+    "@strapi/plugin-users-permissions": "4.2.2",
     "@strapi/provider-email-mocknodemailer": "file:providers/strapi-provider-email-mocknodemailer",
-    "@strapi/strapi": "4.3.6",
+    "@strapi/strapi": "4.2.2",
     "sqlite3": "5.0.2"
   },
   "author": {
