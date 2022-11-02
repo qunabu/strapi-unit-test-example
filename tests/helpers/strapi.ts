@@ -39,6 +39,7 @@ export const waitForServer = () =>
  */
 export async function setupStrapi() {
   if (!instance) {
+    console.log("process.cwd()", process.cwd());
     /** the follwing code in copied from `./node_modules/strapi/lib/Strapi.js` */
     try {
       await strapiO.compile();
