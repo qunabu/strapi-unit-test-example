@@ -1,0 +1,37 @@
+{
+  "name": "strapi-4-ts",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "test": "jest --runInBand --coverage=true"
+  },
+  "devDependencies": {
+    "jest": "^29.2.2",
+    "nodemailer-mock": "^1.5.12",
+    "supertest": "^6.3.1",
+    "ts-jest": "^29.0.3",
+    "@strapi/provider-email-mocknodemailer": "file:providers/strapi-provider-email-mocknodemailer"
+  },
+  "dependencies": {
+    "@strapi/plugin-i18n": "4.4.5",
+    "@strapi/plugin-users-permissions": "4.4.5",
+    "@strapi/strapi": "4.4.5",
+    "better-sqlite3": "7.4.6"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "6fc387eb-f593-420d-8756-20f8e2597e86"
+  },
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
