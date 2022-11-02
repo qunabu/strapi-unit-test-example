@@ -44,8 +44,8 @@ export async function setupStrapi() {
     try {
       await strapiO.compile();
       await Strapi({
-        appDir: "/Users/mateuszwojczal/Desktop/localhost/strapi-4ts",
-        distDir: "/Users/mateuszwojczal/Desktop/localhost/strapi-4ts/dist",
+        appDir: process.cwd(),
+        distDir: process.cwd() + "/dist",
         autoReload: false,
         serveAdminPanel: false,
       }).load();
