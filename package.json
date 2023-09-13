@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@strapi/plugin-i18n": "4.3.6",
-    "@strapi/plugin-users-permissions": "4.3.6",
+    "@strapi/plugin-users-permissions": "4.12.1",
     "@strapi/provider-email-mocknodemailer": "file:providers/strapi-provider-email-mocknodemailer",
     "@strapi/strapi": "4.3.6",
     "sqlite3": "5.0.2"
